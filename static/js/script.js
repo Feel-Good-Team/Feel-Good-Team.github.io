@@ -5,6 +5,7 @@
 //NOTE: For example, checkBoxesFood could theoretically be passed to the backend.
 //If the user selected 'pizza' and 'dessert', checBoxesFood would look like {"food", ["pizza", "dessert"]}
 function submitForms() {
+    //need to remove these
 	var checkedBoxesFood = getCheckedBoxes("food");
 	printCheckedList(checkedBoxesFood, "food");
 	var checkedBoxesMusic = getCheckedBoxes("music");

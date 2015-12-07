@@ -9,11 +9,11 @@
     <script type="text/javascript" src="/static/js/jquery-1.11.3.js"></script>
 </head>
 
-<body class="teal accent-3">
+<body class="blue accent-3">
     <div class="container">
         <!-- This is the welcome message. -->
-        <h1 class="teal-text text-darken-3">Happify!</h1>
-        <h2 class="teal-text text-darken-2 center intro">Hello there! Please select what you like, then click "Make Me Happy!" for an instant cheer up!</h2>
+        <h1 class="white-text">Happify!</h1>
+        <h2 class="white-text center intro">Hello there! Please select what you like, then click "Make Me Happy!" for an instant cheer up!</h2>
 
         <!-- This div contains all the form boxes -->
 
@@ -24,7 +24,7 @@
                     <h2>FOOD</h2>
                     <form name="foodform" id="food" action="/create" method="post">
                         <p>
-                            <input type="checkbox" name="food" value="pizza" id="pizza"/>
+                            <input type="checkbox" name="food" value="pizza" id="pizza" checked="checked" />
                             <label for="pizza">Pizza</label>
                         </p>
                         <p>
@@ -53,7 +53,7 @@
                     <h2>MUSIC</h2>
                     <form name="musicform" id="music" action="/create" method="post">
                         <p>
-                            <input type="checkbox" name="music" value="hiphoprap" id="hiphoprap"/>
+                            <input type="checkbox" name="music" value="hiphoprap" id="hiphoprap" checked="checked"/>
                             <label for="hiphoprap">Hip Hop/Rap</label>
                         </p>
                         <p>
@@ -86,19 +86,19 @@
                             <label for="dogs">Dogs:</label>
                         </p>
                         <p>
-                            <input type="checkbox" name="pets" value="cats" id="cats" checked="checked" />
+                            <input type="checkbox" name="pets" value="cats" id="cats"/>
                             <label for="cats">Cats</label>
                         </p>
                         <p>
-                            <input type="checkbox" name="pets" value="turtles" id="turtles" checked="checked" />
+                            <input type="checkbox" name="pets" value="turtles" id="turtles" />
                             <label for="turtles">Turtles</label>
                         </p>
                         <p>
-                            <input type="checkbox" name="pets" value="birds" id="birds" checked="checked" />
+                            <input type="checkbox" name="pets" value="birds" id="birds"/>
                             <label for="birds">Birds</label>
                         </p>
                         <p>
-                            <input type="checkbox" name="pets" value="bunnies" id="bunnies" checked="checked" />
+                            <input type="checkbox" name="pets" value="bunnies" id="bunnies" />
                             <label for="bunnies">Bunnies</label>
                         </p>
                     </form>
@@ -140,7 +140,7 @@
             <div class="col s2 offset-s5">
                 <div class="buttonspace">
                     <!-- This is the submit button -->
-                    <input type="button" value="Make Me Happy!" class="waves-effect waves-light btn-large red darken-1" onclick="submitForms()" />
+                    <input type="button" value="Make Me Happy!" class="waves-effect waves-light btn-large teal accent-2 grey-text text-darken-3" onclick="submitForms()" />
                 </div>
             </div>
         </div>
