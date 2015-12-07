@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script>       
+      var someJavaScriptVar = '{{youtubeId}}';
+    </script>
+
+
+
+
+
+    <style>
+
+    .imgClass { 
+    background-image: url(http://inspectelement.com/wp-content/themes/inspectelementv2/style/images/button.png);
+    background-position:  0px 0px;
+    background-repeat: no-repeat;
+    width: 186px;
+    height: 53px;
+    border: 0px;
+    background-color: none;
+    cursor: pointer;
+    outline: 0;
+    }
+    .imgClass:hover{ 
+      background-position:  0px -52px;
+    }
+
+    .imgClass:active{
+      background-position:  0px -104px;
+    }
+
+    </style>
+  
+  </head>
+  <body>
+
+    <h1> We hope this will make you feel better! </h1>
+
+    
+    <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
+
+
+    <div id="player"></div>
+
+    <div id="happyemoji"></div>
+
+
+
+    <script>
+      
+
+      // 2. This code loads the IFrame Player API code asynchronously.
+      
+      var tag = document.createElement('script');
+
+      tag.src = "https://www.youtube.com/iframe_api";
+      var firstScriptTag = document.getElementsByTagName('script')[0];
+      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+      // 3. This function creates an <iframe> (and YouTube player)
+      //    after the API code downloads.
+      var player;
+      function onYouTubeIframeAPIReady() {
+        player = new YT.Player('player', {
+          height: '390',
+          width: '640',
+          videoId: someJavaScriptVar,
+          events: {
+            'onReady': onPlayerReady,
+            'onStateChange': onPlayerStateChange
+          }
+        });
+      }
+
+      // 4. The API will call this function when the video player is ready.
+      function onPlayerReady(event) {
+        event.target.playVideo();
+      }
+
+      // 5. The API calls this function when the player's state changes.
+      //    The function indicates that when playing a video (state=1),
+      //    the player should play for six seconds and then stop.
+      var done = false;
+      
+      function onPlayerStateChange(event) {
+        if (event.data == YT.PlayerState.PLAYING && !done) {
+          setTimeout(stopVideo, 6000);
+          done = true;
+          setTimeout(function(){
+          document.getElementById('happyemoji').innerHTML = '<form action="/create2" method="POST"> <input type="submit" name="animal" class="imgClass" /></form>';
+          //document.getElementById('happyemoji').style.display = 'block';
+          //document.getElementById('sademoji').style.display = 'block';
+        },6000);
+        }
+      }
+      
+      function stopVideo() {
+        player.stopVideo();
+      }
+
+
+
+      document.getElementById("err").innerHTML = "The tag is the following"
+    </script>
+    
+    <!-- Please keep following scripts!! -->
+    <script src="/static/jquery-1.11.3.js"></script>
+
+  </body>
+</html>

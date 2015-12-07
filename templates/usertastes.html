@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head>
+        <title>Feeling Good</title>
+        <!-- TO DO: include other head elements -->
+
+    </head>
+
+<body>
+
+    <h1>What do you like?</h1>
+
+
+
+        <form name="usertastes" id="tastes" action="/create" method="POST">
+
+
+        <!-- Yelp API -->
+        <p> What is your favorite food?</p>
+        <label>
+            <input type="checkbox" name="food" value="pizza"> Pizza <br>
+            <input type="checkbox" name="food" value="dessert"> Dessert <br>
+            <input type="checkbox" name="food" value="american"> American <br>
+            <input type="checkbox" name="food" value="asian"> Asian <br>
+            <input type="checkbox" name="food" value="mexican"> Mexican <br>
+        </label>
+
+        <br>
+        <br>
+
+
+
+        <!-- Spotify API -->
+        <p> What is your favorite music genre?</p>
+        <label>
+            <input type="checkbox" name="music" value="hip-hop"> Hip-hop <br>
+            <!-- TO DO: encode & of R&B -->
+            <input type="checkbox" name="music" value="R and B"> RandB <br>
+            <input type="checkbox" name="music" value="Pop"> Pop <br>
+            <input type="checkbox" name="music" value="Country"> Country <br>
+            <input type="checkbox" name="music" value="House"> House <br>
+        </label>
+
+        <br>
+        <br>
+
+
+
+        <!-- Youtube API -->
+        <p> What is your favorite animal?</p>
+        <label>
+            <input type="checkbox" name="animal" value="cat"> Cat <br>
+            <input type="checkbox" name="animal" value="dog"> Dog <br>
+            <input type="checkbox" name="animal" value="turtle"> Turtle <br>
+
+        </label>
+
+        <br>
+        <br>
+
+
+        <!-- GIPHY API -->
+        <p> What is your current feeling?</p>
+        <label>
+            <input type="checkbox" name="currentfeeling" value="angry"> Angry <br>
+            <input type="checkbox" name="currentfeeling" value="stressed"> Stressed <br>
+            <input type="checkbox" name="currentfeeling" value="frustrated"> Frustrated <br>
+            <input type="checkbox" name="currentfeeling" value="tired"> Tired <br>
+            <input type="checkbox" name="currentfeeling" value="bored"> Bored <br>
+        </label>
+
+        <br>
+        <br>
+
+        <input type="submit" value="Make me smile!">
+
+
+        </form>
+
+	</body>
+</html>
