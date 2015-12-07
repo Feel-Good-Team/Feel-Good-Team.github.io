@@ -4,6 +4,7 @@
 <head>
     <title>Web Architecture: Project 2</title>
     <link rel="stylesheet" href="/static/css/materialize.css">
+    <link rel="stylesheet" href="/static/css/animate.css">
     <link rel="stylesheet" href="/static/css/stylesheet.css">
     <script type="text/javascript" src="/static/js/script.js"></script>
     <script type="text/javascript" src="/static/js/jquery-1.11.3.js"></script>
@@ -12,12 +13,12 @@
 <body class="blue accent-3">
     <div class="container">
         <!-- This is the welcome message. -->
-        <h1 class="white-text">Happify!</h1>
+        <h1 class="white-text animated animated fadeInDown">Happify!</h1>
         <h2 class="white-text center intro">Hello there! Please select what you like, then click "Make Me Happy!" for an instant cheer up!</h2>
 
         <!-- This div contains all the form boxes -->
 
-        <div class="row">
+        <div class="row animated pulse">
             <div class="col s3">
                 <!-- Food form box -->
                 <div class="option-box card-panel hoverable" id="food">
@@ -140,7 +141,7 @@
             <div class="col s2 offset-s5">
                 <div class="buttonspace">
                     <!-- This is the submit button -->
-                    <input type="button" value="Make Me Happy!" class="waves-effect waves-light btn-large teal accent-2 grey-text text-darken-3" onclick="submitForms()" />
+                    <input type="button" value="Make Me Happy!" class="waves-effect waves-light btn-large yellow accent-2 grey-text text-darken-3" onclick="submitForms()" />
                 </div>
             </div>
         </div>
