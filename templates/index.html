@@ -7,79 +7,100 @@
     <link rel="stylesheet" href="/static/css/stylesheet.css">
     <script type="text/javascript" src="/static/js/script.js"></script>
     <script type="text/javascript" src="/static/js/jquery-1.11.3.js"></script>
-    <style>
-        .option-box:hover {
-            background-color: rgb(255, 241, 149);
-            cursor: pointer;
-        }
-    </style>
 </head>
 
-<body class="light-blue">
+<body class="teal accent-3">
     <div class="container">
         <!-- This is the welcome message. -->
-        <h1 class="white-text">Happify</h1>
-        <h2 class="white-text center intro">Hello there! Please select what you like, then click "Make Me Happy!" for an instant cheer up!</h2>
+        <h1 class="teal-text text-darken-3">Happify!</h1>
+        <h2 class="teal-text text-darken-2 center intro">Hello there! Please select what you like, then click "Make Me Happy!" for an instant cheer up!</h2>
 
         <!-- This div contains all the form boxes -->
 
         <div class="row">
             <div class="col s3">
                 <!-- Food form box -->
-                <div class="option-box card-panel" id="food">
+                <div class="option-box card-panel hoverable" id="food">
                     <h2>FOOD</h2>
                     <form name="foodform" id="food" action="/create" method="post">
-                        Pizza:
-                        <input type="checkbox" name="food" value="pizza">
-                        <br/> Dessert:
-                        <input type="checkbox" name="food" value="dessert">
-                        <br/> Burgers:
-                        <input type="checkbox" name="food" value="american">
-                        <br/> Asian:
-                        <input type="checkbox" name="food" value="asian">
-                        <br/> Mexican:
-                        <input type="checkbox" name="food" value="mexican">
-                        <br/>
+                        <p>
+                            <input type="checkbox" name="food" value="pizza" id="pizza"/>
+                            <label for="pizza">Pizza</label>
+                        </p>
+                        <p>
+                            <input type="checkbox" name="food" value="dessert" id="dessert"/>
+                            <label for="dessert">Dessert</label>
+                        </p>
+                        <p>
+                            <input type="checkbox" name="food" value="burgers" id="burgers"/>
+                            <label for="burgers">Burgers</label>
+                        </p>
+                        <p>
+                            <input type="checkbox" name="food" value="asian" id="asian"/>
+                            <label for="asian">Asian</label>
+                        </p>
+                        <p>
+                            <input type="checkbox" name="food" value="mexican" id="mexican"/>
+                            <label for="mexican">Mexican</label>
+                        </p>
                     </form>
                 </div>
             </div>
             <div class="col s3">
 
                 <!-- Music form box -->
-                <div class="option-box card-panel" id="music">
+                <div class="option-box card-panel hoverable" id="music">
                     <h2>MUSIC</h2>
                     <form name="musicform" id="music" action="/create" method="post">
-                        Hip Hop/Rap:
-                        <input type="checkbox" name="music" value="hiphoprap">
-                        <br/> Pop:
-                        <input type="checkbox" name="music" value="pop">
-                        <br/> Dubstep:
-                        <input type="checkbox" name="music" value="dubstep">
-                        <br/> Rock:
-                        <input type="checkbox" name="music" value="rock">
-                        <br/> Country:
-                        <input type="checkbox" name="music" value="country">
-                        <br/>
+                        <p>
+                            <input type="checkbox" name="music" value="hiphoprap" id="hiphoprap"/>
+                            <label for="hiphoprap">Hip Hop/Rap</label>
+                        </p>
+                        <p>
+                            <input type="checkbox" name="music" value="pop" id="pop"/>
+                            <label for="pop">Pop</label>
+                        </p>
+                        <p>
+                            <input type="checkbox" name="music" value="dubstep" id="dubstep"/>
+                            <label for="dubstep">Dubstep</label>
+                        </p>
+                        <p>
+                            <input type="checkbox" name="music" value="rock" id="rock"/>
+                            <label for="rock">Rock</label>
+                        </p>
+                        <p>
+                            <input type="checkbox" name="music" value="country" id="country"/>
+                            <label for="country">Country</label>
+                        </p>
                     </form>
                 </div>
             </div>
             <div class="col s3">
 
                 <!-- Pets form box -->
-                <div class="option-box card-panel" id="pets">
+                <div class="option-box card-panel hoverable" id="pets">
                     <h2>PETS</h2>
                     <form name="petform" id="pets" action="/create" method="post">
-                        Dogs:
-                        <input type="checkbox" name="pets" value="dogs">
-                        <br/> Cats:
-                        <input type="checkbox" name="pets" value="cats">
-                        <br/> Turtles:
-                        <input type="checkbox" name="pets" value="turtles">
-                        <br/> Birds:
-                        <input type="checkbox" name="pets" value="birds">
-                        <br/> Bunnies:
-                        <input type="checkbox" name="pets" value="bunnies">
-                        <br/>
+                        <p>
+                            <input type="checkbox" name="pets" value="dogs" id="dogs" checked="checked" />
+                            <label for="dogs">Dogs:</label>
+                        </p>
+                        <p>
+                            <input type="checkbox" name="pets" value="cats" id="cats" checked="checked" />
+                            <label for="cats">Cats</label>
+                        </p>
+                        <p>
+                            <input type="checkbox" name="pets" value="turtles" id="turtles" checked="checked" />
+                            <label for="turtles">Turtles</label>
+                        </p>
+                        <p>
+                            <input type="checkbox" name="pets" value="birds" id="birds" checked="checked" />
+                            <label for="birds">Birds</label>
+                        </p>
+                        <p>
+                            <input type="checkbox" name="pets" value="bunnies" id="bunnies" checked="checked" />
+                            <label for="bunnies">Bunnies</label>
+                        </p>
                     </form>
                 </div>
             </div>
@@ -87,32 +108,41 @@
             <div class="col s3">
 
                 <!-- GIFs form box -->
-                <div class="option-box card-panel" id="gifs">
+                <div class="option-box card-panel hoverable" id="gifs">
                     <h2>GIFs</h2>
                     <form name="gifsform" id="gifs" action="/create" method="post">
-                        Dancing GIF:
-                        <input type="checkbox" name="gifs" value="dancing">
-                        <br/> Funny GIF:
-                        <input type="checkbox" name="gifs" value="funny">
-                        <br/> Happy GIF:
-                        <input type="checkbox" name="gifs" value="happy">
-                        <br/> Animal GIF:
-                        <input type="checkbox" name="gifs" value="animal">
-                        <br/> Cute GIF:
-                        <input type="checkbox" name="gifs" value="cute">
-                        <br/>
+                       <p>
+                            <input type="checkbox" name="gifs" value="dancing" id="dancing" checked="checked" />
+                            <label for="dancing">Dancing</label>
+                        </p>
+                        <p>
+                            <input type="checkbox" name="gifs" value="funny" id="funny"/>
+                            <label for="funny">Funny</label>
+                        </p>
+                        <p>
+                            <input type="checkbox" name="gifs" value="happy" id="happy"/>
+                            <label for="happy">Happy</label>
+                        </p>
+                        <p>
+                            <input type="checkbox" name="gifs" value="animal" id="animal"/>
+                            <label for="animal">Animal</label>
+                        </p>
+                        <p>
+                            <input type="checkbox" name="gifs" value="cute" id="cute"/>
+                            <label for="cute">Cute</label>
+                        </p>
                     </form>
                 </div>
             </div>
 
         </div>
         <div class="row">
-        <div class="col s2 offset-s5">
-          <div class="buttonspace">
-            <!-- This is the submit button -->
-            <input type="button" value="Make Me Happy!" class="waves-effect waves-light pink accent-2 btn-large" onclick="submitForms()" />
+            <div class="col s2 offset-s5">
+                <div class="buttonspace">
+                    <!-- This is the submit button -->
+                    <input type="button" value="Make Me Happy!" class="waves-effect waves-light btn-large red darken-1" onclick="submitForms()" />
+                </div>
             </div>
-        </div>
         </div>
     </div>
 </body>
