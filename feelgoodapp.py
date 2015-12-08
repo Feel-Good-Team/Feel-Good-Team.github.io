@@ -1,10 +1,5 @@
 #!/usr/bin/env python
 
-
-"""
-10:36 PM sunday 
-"""
-
 #import libraries
 import argparse, httplib2, json, os, random, sys
 from random import randint
@@ -127,7 +122,7 @@ def create():
     ANIMAL for Youtube API.
     In Youtube API, search words will be: favorite animal + funny
     """
-    favAnimal = request.form.getlist('animal')
+    favAnimal = request.form.getlist('pets')
     animals = []
     for item in favAnimal:
         item = str(item).replace('u\'','')
@@ -145,7 +140,7 @@ def create():
     """
     CURRENTFEELING for GIPHY API
     """
-    feeling = request.form.getlist('currentfeeling')
+    feeling = request.form.getlist('gifs')
     feelings = []
     for item in feeling:
         item = str(item).replace('u\'','')
