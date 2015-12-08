@@ -1,6 +1,7 @@
 <snippet>
-  <content><![CDATA[
-# ${1:FEEL GOOD or HAPPIFY}
+	<content><![CDATA[
+${1:FEEL GOOD or HAPPIFY}
+]]>
 TODO: Write a project description
 ## Description
 Website that has different options to help people feel good
