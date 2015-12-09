@@ -387,6 +387,7 @@ def callback():
     playlist_data = json.loads(playlists_response.text)
 
     #get Category of music
+    # I have not linked it to the form yet!!
     musicGenre = "rnb"
     print "------------"
     print "musicGenre ", musicGenre
