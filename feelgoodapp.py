@@ -14,12 +14,18 @@ import urllib,json
 import shelve
 import uuid
 
+
+# Libraries for QUOTE database:
+from xlrd import open_workbook
 import sqlite3
+from sqlite3 import OperationalError
+import time
+import datetime
 
 
-
+# Libraries for flask
 import flask
-from flask import request, Flask, render_template, jsonify, abort, redirect
+from flask import request, Flask, render_template, jsonify, abort, redirect, make_response
 
 
 
@@ -50,12 +56,69 @@ def indexProject():
     """
     Landing page of the "feel good" application
     Note: the template feel-good-index.html must be in the folder "template"
-    """    
+    """
+
+
+
+    def tableCreate():
+        conn = sqlite3.connect('motiveQuote.db')
+        c = conn.cursor()
+        try:
+            c.execute("CREATE TABLE stuffToPlot(ID INT, quote TEXT, author TEXT, majortheme TEXT, minortheme TEXT)")
+        except OperationalError:
+            None
+
+    def enterData():
+        """
+        Open Excel file named simple.xlsx where all quotes are.
+        """
+        conn = sqlite3.connect('motiveQuote.db')
+        c = conn.cursor()
+
+        book = open_workbook('simple.xlsx',on_demand=True)
+        sheet = book.sheet_by_name("Sheet1")
+
+        # Number of columns
+        num_cols = sheet.ncols
+        # Number of rows
+        nrows = sheet.nrows
+        # rowId for DB will be integers 0, 1, 2, etc.
+        idForDb = -1
+
+        # Iterate through rows
+        for row_idx in range(0, sheet.nrows):
+            # Get cell object (quote) by row, col
+            cell_obj_quote = sheet.cell(row_idx, 0)  
+            quote = cell_obj_quote.value
+            
+            cell_obj_author = sheet.cell(row_idx, 1)
+            author = cell_obj_author.value
+            
+            cell_obj_maj = sheet.cell(row_idx, 2)
+            majortheme = cell_obj_maj.value
+            
+            cell_obj_min = sheet.cell(row_idx, 3)
+            minortheme = cell_obj_min.value
+            
+            idForDb = idForDb + 1
+
+            c.execute("INSERT INTO stuffToPlot (ID, quote, author, majortheme, minortheme) VALUES (?,?,?,?,?)", 
+                (idForDb, quote, author, majortheme, minortheme))
+
+            conn.commit()  
+
+        
+    tableCreate()
+
+    enterData()
+        
     return flask.render_template('facebook.html')
 
 
 
-
+"""
+GO TO FORM
+"""
 
 @app.route("/tastes", methods=['GET'])
 def tastes():
@@ -68,242 +131,156 @@ def tastes():
 @app.route("/create", methods=['POST', 'GET'])
 def create():
     """
-    This POST request saves the tastes of the user, when user answers the questions
-    of the form
+    User press submit button with "POST" method from usertastes.html
+    Step 1: save the values from the form in a DB
+    Step 2: generate the pages
     """
 
-
+    logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.DEBUG)
 
     """
     --------------------------------------------------------------------------------
     STEP 1: RETRIEVE VALUES FROM FORM
+    DON'T FORGET TO CLEAN DB
     --------------------------------------------------------------------------------
 
     """
 
+    if request.method == 'POST':
 
-
-    logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.DEBUG)
-    
-    uid = uuid.uuid4()
-    userID = uid.hex
-
-    preferences = []
-
-    """
-    FOOD for Yelp API
-    """
-
-    favFood = request.form.getlist('food')
-    foods = []
-    for item in favFood:
-        item = str(item).replace('u\'','')
-        foods.append(item)
-    favFood = foods
-    print "favFood ", favFood
-    demo_db["food"] = favFood
-
-
-
-    """
-    MUSIC genre for Spotify API
-    """
-    favMusic = request.form.getlist('music')
-    music = []
-    for item in favMusic:
-        item = str(item).replace('u\'','')
-        music.append(item)
-    favMusic = music
-    print "favMusic ", favMusic
-    demo_db["music"] = favMusic
-
-
-    """
-    ANIMAL for Youtube API.
-    In Youtube API, search words will be: favorite animal + funny
-    """
-    favAnimal = request.form.getlist('pets')
-    animals = []
-    for item in favAnimal:
-        item = str(item).replace('u\'','')
-        animals.append(item)
-
-    favAnimal = animals + ["funny"]
-
-    print "favAnimal ", favAnimal
-    demo_db["animal"] = favAnimal
-
-
-
-    
-
-    """
-    CURRENTFEELING for GIPHY API
-    """
-    feeling = request.form.getlist('gifs')
-    feelings = []
-    for item in feeling:
-        item = str(item).replace('u\'','')
-        feelings.append(item)
-    feeling = feelings
-    print "feeling ", feeling
-    demo_db["emotion"] = feeling
-
-    
-
-
-
-
-
-
-
-
-
-
-   
-
-
-
-    """
-    --------------------------------------------------------------------------------
-    STEP 2: USEFUL FUNCTIONS TO USE APIs
-    --------------------------------------------------------------------------------
-
-    """
-
-    
-
-
-    def youtube_search(searchterm):
-   
-        youtube = build(YOUTUBE_API_SERVICE_NAME, YOUTUBE_API_VERSION, developerKey=DEVELOPER_KEY)
-
-
-        search_response = youtube.search().list(q=searchterm, \
-            part="id,snippet", \
-            maxResults=25\
-            ).execute()
-
-        videos = []
-        channels = []
-        playlists = []
-
-        # to obtain the title of the video
-        # use: search_result["snippet"]["title"]
-
-        for search_result in search_response.get("items", []):
-            if search_result["id"]["kind"] == "youtube#video":
-                videos.append((search_result["snippet"]["title"], search_result["id"]["videoId"]))
-
-        # Select a random video in all videos suggested for search tearm
-        randomVideoSelection = randint(0,len(videos)-1)
-
-        #just return the Id of the Youtube Video
-        return [searchterm, videos[randomVideoSelection][1]]
-
-
-
-    
-    def searchGifOnGiphy(*args):
-        """ 
-        input: search terms, example: "cats", "dogs"
-        ouput: gif url
-        """ 
-        urlrequest = "http://api.giphy.com/v1/gifs/search?q="
-        tot = len(args)
-        i = 0
-        for ar in args:
-            i = i + 1
-            if i<len(args):
-                urlrequest = urlrequest + ar + "+"
-            else:
-                i = urlrequest = urlrequest + ar
-        data = json.loads(urllib.urlopen(urlrequest + "&api_key=dc6zaTOxFJmzC").read())
-
-        for key, value in data.items():
-            if key == "data":
-                gifurl = value[randint(0,len(value)-1)]['images']['original']['url']
-        return gifurl
-
-
-
-    """
-    --------------------------------------------------------------------------------
-    STEP 3: RETURN RANDOM PAGE
-    --------------------------------------------------------------------------------
-
-    """
-
-    firstPageNumber = random.randint(0, 1)
-    
-   
-
-    if firstPageNumber == 0:
         """
-        Show ANIMAL with Youtube API
+        FOOD for Yelp API
         """
-        
-        return flask.render_template('feel-good-animal.html', youtubeId = youtube_search(demo_db['animal'])[1], favAni = youtube_search(demo_db['animal'])[0])
+        favFood = request.form.getlist('food')
+        foods = []
+        for item in favFood:
+            item = str(item).replace('u\'','')
+            foods.append(item)
+        favFood = foods
+        demo_db["food"] = favFood    
 
-    if firstPageNumber ==1:
+        """
+        MUSIC genre for Spotify API
+        """
+        favMusic = request.form.getlist('music')
+        music = []
+        for item in favMusic:
+            item = str(item).replace('u\'','')
+            music.append(item)
+        favMusic = music
+        demo_db["music"] = favMusic
 
-        return flask.render_template('feel-good-gif.html', gifurl = searchGifOnGiphy(demo_db['animal'][0]))
+        """
+        ANIMAL for Youtube API.
+        In Youtube API, search words will be: favorite animal + funny
+        """
+        favAnimal = request.form.getlist('pets')
+        animals = []
+        for item in favAnimal:
+            item = str(item).replace('u\'','')
+            animals.append(item)
 
+        favAnimal = animals + ["funny"]
 
-    if firstPageNumber == 2:
-
-        return flask.render_template('feel-good-quote.html', gifurl = searchGifOnGiphy(demo_db['animal'][0]))
-
-
-
-
-
-
-
-
-@app.route("/create2", methods=['POST','GET'])
-def create2():
-
-    """
-    --------------------------------------------------------------------------------
-    RE-GENERATE RANDOM PAGES
-    --------------------------------------------------------------------------------
-
-    """
-
-    print "the second time  ", demo_db['animal']
-
-
-    def youtube_search(searchterm):
-   
-        youtube = build(YOUTUBE_API_SERVICE_NAME, YOUTUBE_API_VERSION, developerKey=DEVELOPER_KEY)
+        demo_db["pets"] = favAnimal
 
 
-        search_response = youtube.search().list(q=searchterm, \
-            part="id,snippet", \
-            maxResults=25\
-            ).execute()
+        """
+        CURRENTFEELING for GIPHY API
+        """
+        feeling = request.form.getlist('gifs')
+        feelings = []
+        for item in feeling:
+            item = str(item).replace('u\'','')
+            feelings.append(item)
+        feeling = feelings
+        print "gifs ", feeling
+        demo_db["gifs"] = feeling[0]
 
-        videos = []
-        channels = []
-        playlists = []
+        return redirect('/create')
 
-        # to obtain the title of the video
-        # use: search_result["snippet"]["title"]
 
-        for search_result in search_response.get("items", []):
-            if search_result["id"]["kind"] == "youtube#video":
-                videos.append((search_result["snippet"]["title"], search_result["id"]["videoId"]))
+    if request.method == 'GET':
 
-        # Select a random video in all videos suggested for search tearm
-        randomVideoSelection = randint(0,len(videos)-1)
 
-        #just return the Id of the Youtube Video
-        return [searchterm, videos[randomVideoSelection][1]]
+        def youtube_search(searchterm):
+            """
+            input: music genre
+            output: [input, youtubeVideoId]
+            """
+       
+            youtube = build(YOUTUBE_API_SERVICE_NAME, YOUTUBE_API_VERSION, developerKey=DEVELOPER_KEY)
+
+
+            search_response = youtube.search().list(q=searchterm, \
+                part="id,snippet", \
+                maxResults=40\
+                ).execute()
+
+            videos = []
+            channels = []
+            playlists = []
+
+            # to obtain the title of the video
+            # use: search_result["snippet"]["title"]
+
+            for search_result in search_response.get("items", []):
+                if search_result["id"]["kind"] == "youtube#video":
+                    videos.append((search_result["snippet"]["title"], search_result["id"]["videoId"]))
+
+            # Select a random video in all videos suggested for search tearm
+            randomVideoSelection = randint(0,len(videos)-1)
+
+            #just return the Id of the Youtube Video
+            return [searchterm, videos[randomVideoSelection][1]]
+
+       
+        def searchGifOnGiphy(*args):
+            """ 
+            input: search terms, example: "cats", "dogs"
+            ouput: gif url
+            """ 
+            total = len(args)
+            randomNumber = random.randint(0, total-1)
+            searchgif = args[randomNumber]
+
+            #generate the URL for the giphy API
+            urlrequest = "http://api.giphy.com/v1/gifs/search?q="
+            urlrequest = urlrequest + searchgif
+
+            data = json.loads(urllib.urlopen(urlrequest + "&api_key=dc6zaTOxFJmzC").read())
+
+            for key, value in data.items():
+                if key == "data":
+                    gifurl = value[randint(0,len(value)-1)]['images']['original']['url']
+            return gifurl
+
+
+        def pullQuote():
+            """
+            No input needed - for now.
+            Output: [quote, author]
+            """
+
+            conn = sqlite3.connect('motiveQuote.db')
+            c = conn.cursor()
+            #sql = "SELECT * FROM stuffToPlot WHERE majortheme =?"
+
+            # Select a random row in the DB of quotes.
+            # [0]: quote number; [1] quote, [2] author, [3] major theme, [4] minor theme
+            sql = c.execute("SELECT * FROM stuffToPlot ORDER BY RANDOM() LIMIT 1")
+
+            results = sql.fetchall()
+            quote = results[0][1]
+            author = results[0][2]
+            return [quote,author]
+
+
+
 
     
-    return flask.render_template('feel-good-animal.html', youtubeId = youtube_search(demo_db['animal'])[1])
 
+        return flask.render_template('all.html', youtubeId = youtube_search(demo_db['pets'])[1], gifurl = searchGifOnGiphy(demo_db['gifs']), quote = pullQuote()[0], quoteauthor = pullQuote()[1])
 
 
 if __name__ == "__main__":
