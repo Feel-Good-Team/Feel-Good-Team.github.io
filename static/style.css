@@ -1,0 +1,18 @@
+h1 {
+    color: magenta;
+}
+
+input {
+    margin-bottom: 20px;
+}
+
+#madlibStory {
+    border: 1px solid;
+    height: 200px;
+    width: 400px;
+}
+
+select {
+    background-color: blue;
+}
+
