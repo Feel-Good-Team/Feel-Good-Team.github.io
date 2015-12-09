@@ -333,7 +333,7 @@ def create():
             youtubeId = youtube_search(demo_db['pets'])[1], \
             gifurl = searchGifOnGiphy(demo_db['gifs']), \
             quote = pullQuote()[0], quoteauthor = pullQuote()[1], \
-            spotifyURL = )
+            spotifyURL = "Spotify not ready yet")
 
 
 if __name__ == "__main__":
