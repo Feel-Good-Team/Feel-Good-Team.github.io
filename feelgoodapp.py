@@ -229,9 +229,10 @@ def create():
             item = str(item).replace('u\'','')
             animals.append(item)
 
-        favAnimal = animals + ["funny"]
+        favAnimal = animals + ["cute", "animals"]
 
         demo_db["pets"] = favAnimal
+        print "demo_db"
 
 
         """
@@ -326,6 +327,10 @@ def create():
 
 
 
+        print demo_db['pets']
+
+
+
 
     
 
@@ -334,6 +339,81 @@ def create():
             gifurl = searchGifOnGiphy(demo_db['gifs']), \
             quote = pullQuote()[0], quoteauthor = pullQuote()[1], \
             spotifyURL = "Spotify not ready yet")
+
+
+
+
+
+#@app.route("/")
+@app.route("/spotifylogin")
+def index():
+    # Auth Step 1: Authorization
+    url_args = "&".join(["{}={}".format(key,urllib.quote(val)) for key,val in auth_query_parameters.iteritems()])
+    auth_url = "{}/?{}".format(SPOTIFY_AUTH_URL, url_args)
+    return redirect(auth_url)
+
+
+@app.route("/callback")
+def callback():
+    # Auth Step 4: Requests refresh and access tokens
+    auth_token = request.args['code']
+    code_payload = {
+        "grant_type": "authorization_code",
+        "code": str(auth_token),
+        "redirect_uri": REDIRECT_URI
+    }
+    base64encoded = base64.b64encode("{}:{}".format(CLIENT_ID, CLIENT_SECRET))
+    headers = {"Authorization": "Basic {}".format(base64encoded)}
+    post_request = requests.post(SPOTIFY_TOKEN_URL, data=code_payload, headers=headers)
+
+    # Auth Step 5: Tokens are Returned to Application
+    response_data = json.loads(post_request.text)
+    access_token = response_data["access_token"]
+    refresh_token = response_data["refresh_token"]
+    token_type = response_data["token_type"]
+    expires_in = response_data["expires_in"]
+
+    # Auth Step 6: Use the access token to access Spotify API
+    authorization_header = {"Authorization":"Bearer {}".format(access_token)}
+
+    # Get profile data
+    user_profile_api_endpoint = "{}/me".format(SPOTIFY_API_URL)
+    profile_response = requests.get(user_profile_api_endpoint, headers=authorization_header)
+    profile_data = json.loads(profile_response.text)
+
+    # Get user playlist data
+    playlist_api_endpoint = "{}/playlists".format(profile_data["href"])
+    playlists_response = requests.get(playlist_api_endpoint, headers=authorization_header)
+    playlist_data = json.loads(playlists_response.text)
+
+    #get Category of music
+    musicGenre = "rnb"
+    print "------------"
+    print "musicGenre ", musicGenre
+    categories_api_endpoint = "{}/browse/categories/{}/playlists".format(SPOTIFY_API_URL,musicGenre)
+    print categories_api_endpoint
+    categories_response = requests.get(categories_api_endpoint, headers=authorization_header)
+    categories_data = json.loads(categories_response.text)
+    
+
+    pp = pprint.PrettyPrinter(indent=2)
+    #change index 0 to select random list in pop
+    #pp.pprint(categories_data['playlists']['items'][2]['uri'])
+
+    print "the URI is"
+    playlistURI = categories_data['playlists']['items'][2]['uri']
+    print "--->", playlistURI
+
+    response = make_response(render_template('all.html'))
+    response.headers['Authorization'] = authorization_header['Authorization']
+
+
+
+    uriSpotify = "https://embed.spotify.com/?uri=" + playlistURI + "&theme=white"
+    return render_template("index2.html",uriSpotify = uriSpotify)
+
+
+
 
 
 if __name__ == "__main__":
