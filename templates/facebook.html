@@ -23,7 +23,7 @@
             if (response.status === 'connected') {
                 // Logged into your app and Facebook.
                 testAPI();
-                document.getElementById('preferenceform').innerHTML = '<form action="/tastes" method="GET"> <button class="btn yellow grey-text text-darken-3" type="submit" formmethod="GET">Make me feel good</button></form>';
+                document.getElementById('preferenceform').innerHTML = '<form action="/tastes" method="GET"> <button class="btn-large yellow darken-1 grey-text text-darken-3" type="submit" formmethod="GET">Make me happy</button></form>';
 
 
             } else if (response.status === 'not_authorized') {
@@ -113,10 +113,11 @@
             </div>
         </div>
         <div class="row">
-            <div class="col s4 offset-s4 center">
+            <div class="col s4 offset-s4 center yellow darken-1">
                 <h2>Login with Facebook</h2>
                 <fb:login-button class="fb-login-button" data-max-rows="1" data-size="xlarge" data-show-faces="false" data-auto-logout-link="false" scope="public_profile,email" onlogin="checkLoginState();">
                 </fb:login-button>
+                <div class="login"></div>
             </div>
         </div>
         <div class="row">
