@@ -2,18 +2,18 @@
 <html>
 
   <head>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js">
+      </script>
+      <link rel="stylesheet" href="/static/css/materialize.css">
+    <link rel="stylesheet" href="/static/css/animate.css">
+    <link rel="stylesheet" href="/static/css/stylesheet.css">
     <script>       
       var someJavaScriptVar = '{{youtubeId}}';
     </script>
 
-
-
-
-
     <style>
 
-    .imgClass { 
+   /* .imgClass { 
     background-image: url(http://inspectelement.com/wp-content/themes/inspectelementv2/style/images/button.png);
     background-position:  0px 0px;
     background-repeat: no-repeat;
@@ -30,28 +30,26 @@
 
     .imgClass:active{
       background-position:  0px -104px;
-    }
+    } */
 
     </style>
   
   </head>
-  <body>
-
-    <h1> We hope this will make you feel better! </h1>
-
-    
+  <body class="green accent-3">
+    <h1 class="white-text title"> We hope this will make you feel better! </h1>
+ 
     <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
 
-
-    <div id="player"></div>
-
-
-
-
+      
+    <div class="row">
+        <div class="col s4 offset-s3">
+            <div id="player"></div>
+        </div>   
+    </div>
+    <!-- insert any element, and it will be centered-->
 
     <script>
       
-
       // 2. This code loads the IFrame Player API code asynchronously.
       
       var tag = document.createElement('script');
