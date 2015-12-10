@@ -21,3 +21,27 @@ h2{
     font-size: 80px;
 }
 
+.icon {
+	font-size: 400%;
+    padding: 20px;
+    margin-top: 100px;
+}
+
+.icontext{
+    margin-bottom:0px;
+}
+
+.fixed {
+	position:sticky;
+}
+
+.quote{
+    font-size: 30px !important;
+    font-family: Roboto;  
+}
+
+#italictext {
+    font-style: italic !important;
+    margin: 30px;
+    vertical-align: baseline;
+}

@@ -6,14 +6,12 @@ from random import randint
 from oauth2client import tools, file, client
 from googleapiclient.errors import HttpError
 from googleapiclient.discovery import build
-from googleapiclient.errors import HttpError
 import logging
 import shelve
 from subprocess import check_output
 import urllib,json
 import shelve
 import uuid
-
 import requests
 import base64
 import pprint
