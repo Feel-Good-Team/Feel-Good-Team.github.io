@@ -45,3 +45,10 @@ h2{
     margin: 30px;
     vertical-align: baseline;
 }
+
+#status{
+    font-size: 80px !important;
+}
+.status{
+    font-size: 80px !important;
+}
