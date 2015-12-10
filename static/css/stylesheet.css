@@ -45,3 +45,15 @@ h2{
     margin: 30px;
     vertical-align: baseline;
 }
+
+#status{
+    font-size: 60px !important;
+}
+.status{
+    font-size: 60px !important;
+}
+
+.login{
+    padding: 30px !important;
+    margin: 20px !important;
+}
