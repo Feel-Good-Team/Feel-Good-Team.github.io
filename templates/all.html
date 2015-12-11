@@ -4,15 +4,19 @@
 <head>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js">
     </script>
+<<<<<<< HEAD
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
 
+=======
+>>>>>>> refs/remotes/Feel-Good-Team/master
     <link rel="stylesheet" href="/static/css/materialize.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="/static/css/animate.css">
     <link rel="stylesheet" href="/static/css/stylesheet.css">
     <script>
         var someJavaScriptVar = '{{youtubeId}}';
+<<<<<<< HEAD
         var daFoodPlace = '{{foodPlace}}';
         var daLatitude = '{{latitude}}';
         var daLongitude = '{{longitude}}';
@@ -23,6 +27,9 @@
       html, body { height: 100%; }
       #map { height: 50%; }
     </style>
+=======
+    </script>
+>>>>>>> refs/remotes/Feel-Good-Team/master
 </head>
 
 <body class="yellow darken-1">
@@ -46,6 +53,7 @@
     </div>
     <!-- insert any element, and it will be centered-->
 
+<<<<<<< HEAD
     <div class="row">
         <div class="col s6 offset-s3 center">
 
@@ -55,6 +63,8 @@
     </div>
 
 
+=======
+>>>>>>> refs/remotes/Feel-Good-Team/master
     <script>
         // 2. This code loads the IFrame Player API code asynchronously.
 
@@ -94,6 +104,7 @@
             if (event.data == YT.PlayerState.PLAYING && !done) {
                 setTimeout(stopVideo, 6000);
                 done = true;
+<<<<<<< HEAD
                
             }
         }
@@ -113,10 +124,31 @@
 
 
 
+=======
+                setTimeout(function() {
+                    document.getElementById('sademoji').innerHTML = '<form action="/create" method="GET"> <input type="image" value="Sad" name="pets" /></form>';
+                    //document.getElementById('happyemoji').style.display = 'block';
+                    //document.getElementById('sademoji').style.display = 'block';
+                }, 6000);
+                
+                setTimeout(function() {
+                    document.getElementById('happyemoji').innerHTML = '<form action="/create" method="GET"> <input type="image" value="Yay" name="pets" /></form>';
+                    //document.getElementById('happyemoji').style.display = 'block';
+                    //document.getElementById('sademoji').style.display = 'block';
+                }, 6000);
+                
+            }
+        }
+
+>>>>>>> refs/remotes/Feel-Good-Team/master
         function stopVideo() {
             player.stopVideo();
         }
 
+<<<<<<< HEAD
+=======
+        document.getElementById("err").innerHTML = "The tag is the following"
+>>>>>>> refs/remotes/Feel-Good-Team/master
     </script>
     
     <!--Heading for gif-->
@@ -141,6 +173,7 @@
         <span class="white-text center quote" id="italictext">"{{quote}}- {{quoteauthor}}"</span>
     </div>
     
+<<<<<<< HEAD
     <h2 class="white-text title animated fadeInUp center">While listening to this..</h2>
 
 
@@ -227,11 +260,16 @@
 
 
 
+=======
+>>>>>>> refs/remotes/Feel-Good-Team/master
 
     <!-- Please keep following scripts!! -->
     <script src="/static/js/jquery-1.11.3.js"></script>
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> refs/remotes/Feel-Good-Team/master
 </body>
 
 </html>
