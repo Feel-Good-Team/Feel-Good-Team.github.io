@@ -2,20 +2,14 @@
 <html>
 
 <head>
-<<<<<<< HEAD
+
     <title>Happify</title>
     <meta charset="UTF-8">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-
-=======
-    <title>Facebook Login JavaScript Example</title>
-    <meta charset="UTF-8">
->>>>>>> refs/remotes/Feel-Good-Team/master
     <link rel="stylesheet" href="/static/css/materialize.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="/static/css/animate.css">
     <link rel="stylesheet" href="/static/css/stylesheet.css">
-<<<<<<< HEAD
     <link rel="stylesheet" type="text/css" href="static/css/d3.slider.css" media="screen" />
     <script src="static/js/d3.v3.min.js"></script>
 
@@ -46,13 +40,10 @@
         }
 
     </style>
-=======
->>>>>>> refs/remotes/Feel-Good-Team/master
 </head>
 
 <body class="pink darken-1">
     <script>
-<<<<<<< HEAD
         var associativeArray = {};
 
         function changeValue(){
@@ -77,18 +68,11 @@
 
         // This is called with the results from from FB.getLoginStatus().
         function statusChangeCallback(response) {
-=======
-        // This is called with the results from from FB.getLoginStatus().
-        function statusChangeCallback(response) {
-            console.log('statusChangeCallback');
->>>>>>> refs/remotes/Feel-Good-Team/master
             console.log(response);
             // The response object is returned with a status field that lets the
             // app know the current login status of the person.
             // Full docs on the response object can be found in the documentation
             // for FB.getLoginStatus().
-<<<<<<< HEAD
-
             if (response.status === 'connected') {
                 associativeArray['userID'] = response.authResponse.userID;
                 testAPI();
@@ -101,17 +85,6 @@
             } else if (response.status === 'not_authorized') {
                 // The person is logged into Facebook, but not your app.
                 document.getElementById('status').innerHTML = 'Please log ' +S
-=======
-            if (response.status === 'connected') {
-                // Logged into your app and Facebook.
-                testAPI();
-                document.getElementById('preferenceform').innerHTML = '<form action="/tastes" method="GET"> <button class="btn-large yellow darken-1 grey-text text-darken-3" type="submit" formmethod="GET">Make me happy</button></form>';
-
-
-            } else if (response.status === 'not_authorized') {
-                // The person is logged into Facebook, but not your app.
-                document.getElementById('status').innerHTML = 'Please log ' +
->>>>>>> refs/remotes/Feel-Good-Team/master
                     'into this app.';
             } else {
                 // The person is not logged into Facebook, so we're not sure if
@@ -157,12 +130,6 @@
             //
             FB.getLoginStatus(function(response) {
                 statusChangeCallback(response);
-<<<<<<< HEAD
-
-=======
->>>>>>> refs/remotes/Feel-Good-Team/master
-            });
-
         };
 
         // Load the SDK asynchronously
@@ -183,12 +150,7 @@
                 console.log('Successful login for: ' + response.name);
                 document.getElementById('status').innerHTML =
                     'Thanks for logging in, ' + response.name + '!';
-<<<<<<< HEAD
                 addButt();
-                
-
-
-
             });
         return response.name;
         };
@@ -207,12 +169,6 @@
 
         // Posting on user's behalf
 
-
-
-=======
-            });
-        }
->>>>>>> refs/remotes/Feel-Good-Team/master
     </script>
 
     <!--
@@ -245,8 +201,6 @@
             <div class="col s2 offset-s5">
                 <a id="preferenceform"></a>
             </div>
-<<<<<<< HEAD
-
         </div>
         <div class="row">
             <div class="col s8 offset-s2 center">
@@ -297,21 +251,7 @@
             <div id="levelhap"></div>
 
         </div>
-
-
-
-
-
     </div>
-
-
-
-=======
-        </div>
-
-    </div>
-
->>>>>>> refs/remotes/Feel-Good-Team/master
 </body>
 
 </html>
