@@ -17,6 +17,15 @@ import base64
 import pprint
 
 
+<<<<<<< HEAD
+from os import environ
+import hashlib
+import string
+import random
+
+
+=======
+>>>>>>> refs/remotes/Feel-Good-Team/master
 # Libraries for QUOTE database:
 from xlrd import open_workbook
 import sqlite3
@@ -24,6 +33,20 @@ from sqlite3 import OperationalError
 import time
 import datetime
 
+<<<<<<< HEAD
+#Yelp 
+import argparse
+import json
+import pprint
+import sys
+import urllib
+import urllib2
+import random 
+
+import oauth2
+
+=======
+>>>>>>> refs/remotes/Feel-Good-Team/master
 
 # Libraries for flask
 import flask
@@ -41,7 +64,13 @@ print "########################################"
 project_id = 'info253-feel-good'
 
 
+<<<<<<< HEAD
+#################################################################
+#                   CREATE APPLICATION                          #
+################################################################# 
+=======
 #create application
+>>>>>>> refs/remotes/Feel-Good-Team/master
 app = flask.Flask(__name__)
 app.debug = True
 
@@ -90,11 +119,47 @@ auth_query_parameters = {
 }
 
 
+<<<<<<< HEAD
+
+#################################################################
+#                              YELP                             #
+#################################################################
+
+API_HOST = 'api.yelp.com'
+DEFAULT_TERM = 'dinner'
+DEFAULT_LOCATION = 'San Francisco, CA'
+SEARCH_LIMIT = 10
+SEARCH_PATH = '/v2/search/'
+BUSINESS_PATH = '/v2/business/'
+
+
+CONSUMER_KEY   = "mDAEyzxc5Hj-Dn6db5dW1A"
+CONSUMER_SECRET  = 'fhLeyV2pGjjVXYV5gNGTa9N4PB8'
+TOKEN           = '9DWp6zTn5yquHlXMo_VupVajnTtLl8Zg'
+TOKEN_SECRET    = 'hO0SEzRJAMUg_k0bLn0IryI0sGQ'
+
+
+
+
+
+
+################################################################
+
+#storing values of the form
+demo_db = shelve.open("demo_db")
+
+# Database/Dictionary to save shortened URLs
+db = shelve.open("shorten.db")
+
+#database of user's level of happiness
+happy_db = shelve.open("happy_db")
+=======
 ################################################################
 
 
 demo_db = shelve.open("demo_db")
 
+>>>>>>> refs/remotes/Feel-Good-Team/master
 
 
 @app.route('/')
@@ -167,12 +232,29 @@ def indexProject():
 GO TO FORM
 """
 
+<<<<<<< HEAD
+@app.route("/tastes", methods=['GET', 'POST'])
+def tastes():
+    #userFacebookId = str(request.form["myField"])
+    userMood = request.form['myMood']
+    userMood = round(float(userMood),1)
+    happy_db['currentuser'] = userMood
+=======
 @app.route("/tastes", methods=['GET'])
 def tastes():
+>>>>>>> refs/remotes/Feel-Good-Team/master
     return flask.render_template('usertastes.html')
 
 
 
+<<<<<<< HEAD
+@app.route("/logout", methods=['GET'])
+def logout():
+
+    return flask.render_template('exit.html',levelOfHappiness = happy_db['currentuser'] )
+
+=======
+>>>>>>> refs/remotes/Feel-Good-Team/master
 
 
 @app.route("/create", methods=['POST', 'GET'])
@@ -230,7 +312,10 @@ def create():
         favAnimal = animals + ["cute", "animals"]
 
         demo_db["pets"] = favAnimal
+<<<<<<< HEAD
+=======
         print "demo_db"
+>>>>>>> refs/remotes/Feel-Good-Team/master
 
 
         """
@@ -242,7 +327,10 @@ def create():
             item = str(item).replace('u\'','')
             feelings.append(item)
         feeling = feelings
+<<<<<<< HEAD
+=======
         print "gifs ", feeling
+>>>>>>> refs/remotes/Feel-Good-Team/master
         demo_db["gifs"] = feeling[0]
 
         return redirect('/create')
@@ -303,6 +391,29 @@ def create():
                     gifurl = value[randint(0,len(value)-1)]['images']['original']['url']
             return gifurl
 
+<<<<<<< HEAD
+        
+        def spot(*args):
+            total = len(args)
+            randomNumber = random.randint(0, total-1)
+            searchgenre = args[randomNumber][0]
+            urlrequest = "https://api.spotify.com/v1/search?q="
+            urlrequest = urlrequest + searchgenre +"&type=playlist"
+            data = json.loads(urllib.urlopen(urlrequest).read())
+            totalPlaylists = len(data["playlists"]['items'])
+            print "total Playlists"
+            print totalPlaylists
+            return data["playlists"]['items'][randint(0,totalPlaylists-1)]['uri']
+
+
+
+        uriSpot = "https://embed.spotify.com/?uri="+spot(demo_db['music'])+"&theme=white"
+     
+
+
+
+=======
+>>>>>>> refs/remotes/Feel-Good-Team/master
 
         def pullQuote():
             """
@@ -323,6 +434,165 @@ def create():
             author = results[0][2]
             return [quote,author]
 
+<<<<<<< HEAD
+        def getLongYoutube(args):
+            """
+            input: youtube video ID
+            output: full Youtube link
+            """
+            longYoutube = "https://www.youtube.com/watch?v="+args
+            return longYoutube
+
+
+        def saveAndShorten(args):
+            """
+            input: longlink
+            output: shortlink
+            """
+            def id_generator(size=6, chars=string.ascii_uppercase + string.digits):
+                solution = ''.join(random.choice(chars) for _ in range(size))
+                return solution
+
+            # the function findKey is useful to render the index.html template with the short link stored as a key in our dictionary
+            #def findKey(): 
+            #    for sh_link, lo_link in db.items():
+            #        if lo_link == longLinkText:
+            #            return sh_link
+
+
+            #before: generateRandomAndSave(longLinkText)
+
+
+            def findKey(valeur):
+                for key, value in db.items():
+                    if value == valeur:
+                        return key
+
+
+            def generateRandomAndSave(args):
+                shortRandomLink = str(id_generator())
+                if db.has_key(shortRandomLink):
+                    generateRandomAndSave(args)   #if short link already exists, regenerate a random URL -> recursive function
+                else:
+                    if args in db.values():
+                        return findKey(args)
+                    else:
+                        db[shortRandomLink] = args
+                        return findKey(args)
+
+            generateRandomAndSave(args)
+            shortYout = "http://localhost:5000/short/"+findKey(args)
+            return shortYout
+
+
+        longvideo = getLongYoutube(youtube_search(demo_db['pets'])[1])
+
+
+
+
+        def demand(host, path, url_params=None):
+            """Prepares OAuth authentication and sends the request to the API.
+            Args:
+                host (str): The domain host of the API.
+                path (str): The path of the API after the domain.
+                url_params (dict): An optional set of query parameters in the request.
+            Returns:
+                dict: The JSON response from the request.
+            Raises:
+                urllib2.HTTPError: An error occurs from the HTTP request.
+            """
+            url_params = url_params or {}
+            url = 'https://{0}{1}?'.format(host, urllib.quote(path.encode('utf8')))
+
+            consumer = oauth2.Consumer(CONSUMER_KEY, CONSUMER_SECRET)
+            oauth_request = oauth2.Request(
+                method="GET", url=url, parameters=url_params)
+
+            oauth_request.update(
+                {
+                    'oauth_nonce': oauth2.generate_nonce(),
+                    'oauth_timestamp': oauth2.generate_timestamp(),
+                    'oauth_token': TOKEN,
+                    'oauth_consumer_key': CONSUMER_KEY
+                }
+            )
+            token = oauth2.Token(TOKEN, TOKEN_SECRET)
+            oauth_request.sign_request(
+                oauth2.SignatureMethod_HMAC_SHA1(), consumer, token)
+            signed_url = oauth_request.to_url()
+
+            conn = urllib2.urlopen(signed_url, None)
+            try:
+                response = json.loads(conn.read())
+            finally:
+                conn.close()
+
+            return response
+
+
+        def search(term, location):
+            """Query the Search API by a search term and location.
+            Args:
+                term (str): The search term passed to the API.
+                location (str): The search location passed to the API.
+            Returns:
+                dict: The JSON response from the request.
+            """
+
+            url_params = {
+                'term': term.replace(' ', '+'),
+                'location': location.replace(' ', '+'),
+                'limit': SEARCH_LIMIT
+            }
+            return demand(API_HOST, SEARCH_PATH, url_params=url_params)
+
+
+        def get_business(business_id):
+            """Query the Business API by a business ID.
+            Args:
+                business_id (str): The ID of the business to query.
+            Returns:
+                dict: The JSON response from the request.
+            """
+            business_path = BUSINESS_PATH + business_id
+
+            return demand(API_HOST, business_path)
+
+
+        def query_api(term, location):
+            """Queries the API by the input values from the user.
+            Args:
+                term (str): The search term to query.
+                location (str): The location of the business to query.
+            """
+            response = search(term, location)
+
+            businesses = response.get('businesses')
+
+            busRandom = random.randint(0,len(businesses)-1)
+
+            business_id = businesses[busRandom]['id']
+
+            #[dict of longitude and latitude, business name]
+            response = [get_business(business_id)['location']['coordinate'],get_business(business_id)['name'],get_business(business_id)['location']['display_address']]
+
+            return response
+
+        foodSearch = demo_db['food'][randint(0,len(demo_db['food'])-1)]
+        print "foodSearch-----------"
+        print foodSearch
+        print "latitude ----------"
+        latitude = query_api(foodSearch,"Berkeley")[0]['latitude']
+        print latitude
+        print "longitude ----------"
+        longitude = query_api(foodSearch,"Berkeley")[0]['longitude']
+        print longitude
+        foodPlaceName = query_api(foodSearch,"Berkeley")[1]
+        foodPlaceAdd = query_api(foodSearch,"Berkeley")[2]
+        addTot = ''
+        for item in foodPlaceAdd:
+            addTot = addTot + item + ' '
+=======
 
 
         print demo_db['pets']
@@ -330,12 +600,52 @@ def create():
 
 
 
+>>>>>>> refs/remotes/Feel-Good-Team/master
     
 
         return flask.render_template('all.html', \
             youtubeId = youtube_search(demo_db['pets'])[1], \
             gifurl = searchGifOnGiphy(demo_db['gifs']), \
             quote = pullQuote()[0], quoteauthor = pullQuote()[1], \
+<<<<<<< HEAD
+            spotifyURL = uriSpot,\
+            shortYoutLink = saveAndShorten(longvideo),\
+            foodPlace = foodPlaceName,\
+            latitude = latitude,\
+            longitude = longitude, \
+            addTot = addTot)
+
+
+
+
+##################################################
+##################################################
+##################################################
+##################################################
+
+
+##################################################
+##################################################
+##################################################
+
+
+@app.route("/short/<short>", methods=['GET'])
+def redirige(short):
+    """
+    Redirect the request to the URL associated =short=, otherwise return 404
+    NOT FOUND
+    """
+    short = str(short)
+
+    if db.has_key(short) == True:
+        return redirect(db[short], code=302)
+    else:
+        return flask.render_template('404.html')
+
+    #raise NotImplementedError
+
+
+=======
             spotifyURL = "Spotify not ready yet")
 
 
@@ -410,6 +720,7 @@ def callback():
 
     uriSpotify = "https://embed.spotify.com/?uri=" + playlistURI + "&theme=white"
     return render_template("index2.html",uriSpotify = uriSpotify)
+>>>>>>> refs/remotes/Feel-Good-Team/master
 
 
 
