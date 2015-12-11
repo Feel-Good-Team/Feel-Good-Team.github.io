@@ -48,7 +48,7 @@
             if (response.status === 'connected') {
                 // Logged into your app and Facebook.
                 testAPI();
-                testAPI2();
+                publishOnWall();
                 document.getElementById('preferenceform').innerHTML = '<form action="/tastes" method="GET"> <button class="btn-large yellow darken-1 grey-text text-darken-3" type="submit" formmethod="GET">Make me happy</button></form>';
 
 
@@ -134,17 +134,17 @@
 
         //};
 
-        // Posting on user's behalf
-        //var body = 'I am using Happify, and I love it!';
-        //function testAPI2() {
-        //    FB.api('/me/feed', 'post', { message: body }, function(response) {
-        //        if (!response || response.error) {
-        //            alert('Oops, error occured');
-        //        } else {
-        //            alert('Message successfully posted on Facebook!' + response.id);
-        //        }
-        //    });
-        //};
+        //Posting on user's behalf
+        var body = 'I just used Happify! It made me smile.';
+        function publishOnWall() {
+            FB.api('/me/feed', 'post', { message: body }, function(response) {
+                if (!response || response.error) {
+                    alert('Oops, error occured');
+                } else {
+                    alert('Message successfully posted on Facebook!');
+                }
+            });
+        };
 
 
     </script>
